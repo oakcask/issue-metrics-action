@@ -13,7 +13,7 @@
   "author": "oakcask",
   "license": "MIT",
   "engines": {
-    "node": "~20"
+    "node": "~22.13.0"
   },
   "type": "module",
   "devDependencies": {
@@ -27,7 +27,7 @@
     "@octokit/webhooks-types": "^7.6.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/github": "^11.0.0",
-    "@types/node": "^20.12.7",
+    "@types/node": "^22.0.0",
     "@vercel/ncc": "^0.38.1",
     "eslint": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
