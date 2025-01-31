@@ -12,11 +12,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
       - uses:  ./.github/actions/setup-pnpm
-      - run: pnpm run graphql-codegen
-      - uses: int128/update-generated-files-action@v2
-        with:
-          commit-message: "fix: update graphql types"
-          token: ${{ secrets.GITHUB_TOKEN  }}
       - run: pnpm run format:all
       - uses: int128/update-generated-files-action@v2
         with:

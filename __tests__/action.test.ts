@@ -25,6 +25,11 @@ describe('parseParameters', () => {
     expect(params.number).toEqual(42)
   })
 
+  it('takes timestamp', async () => {
+    const params = (await parseParameters())!
+    expect(params.createdAt).toEqual('2006-01-02T15:04:06+0700')
+  })
+
   describe('when the payload withoout a issue', async () => {
     beforeEach(() => {
       process.env.GITHUB_EVENT_PATH = '__tests__/fixtures/payload.no-issue.json'
@@ -45,6 +50,12 @@ describe('parseParameters', () => {
       const params = (await parseParameters())!
       expect(params.number).toEqual(4242)
       expect('merged' in params && params.merged).toEqual(true)
+    })
+
+    it('takes timestamp', async () => {
+      const params = (await parseParameters())!
+      expect(params.createdAt).toEqual('2006-01-02T15:04:06+0700')
+      expect(params.closedAt).toEqual('2016-01-02T15:04:06+0700')
     })
   })
 })

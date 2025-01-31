@@ -1,25 +1,22 @@
 import fs from 'node:fs/promises'
 import * as core from '@actions/core'
-import { Octokit } from '@octokit/action'
 import { Label, WebhookEvent } from '@octokit/webhooks-types'
-import { queryIssueTimestaps } from './github.js'
 import { Metric } from './metrics.js'
 import Template from './template.js'
 
 type Parameters = {
   owner: string,
-  repo: string
+  repo: string,
+  action: string,
+  number: number,
+  labels: Label[],
+  createdAt: string,
+  closedAt?: string
 } & (
   {
     type: 'issue',
-    action: string,
-    number: number,
-    labels: Label[]
   } | {
     type: 'pr',
-    action: string,
-    number: number,
-    labels: Label[],
     merged: boolean | null
   })
 
@@ -32,7 +29,9 @@ export async function parseParameters (): Promise<Parameters | undefined> {
       type: 'issue',
       action: payload.action,
       number: payload.issue.number,
-      labels: payload.issue.labels || []
+      labels: payload.issue.labels || [],
+      createdAt: payload.issue.created_at,
+      closedAt: payload.issue.closed_at ?? undefined
     }
   }
   if ('pull_request' in payload && payload.pull_request) {
@@ -42,7 +41,9 @@ export async function parseParameters (): Promise<Parameters | undefined> {
       action: payload.action,
       number: payload.pull_request.number,
       labels: payload.pull_request.labels || [],
-      merged: payload.pull_request.state === 'closed' && 'merged' in payload.pull_request && payload.pull_request.merged
+      merged: payload.pull_request.state === 'closed' && 'merged' in payload.pull_request && payload.pull_request.merged,
+      createdAt: payload.pull_request.created_at,
+      closedAt: payload.pull_request.closed_at ?? undefined
     }
   }
 
@@ -62,7 +63,6 @@ function parseRepo (payload: WebhookEvent): { owner: string, repo: string } {
 }
 
 export async function main () {
-  const octokit = new Octokit()
   const params = await parseParameters()
   const labelWhitelist = core.getMultilineInput('tag-labels').reduce((a, e) => {
     a[e] = true
@@ -76,38 +76,35 @@ export async function main () {
     return
   }
 
-  const timestamps = await queryIssueTimestaps(octokit, params)
+  const { createdAt, closedAt } = params
   const metrics: { [key: string]: Metric } = {}
 
-  if (timestamps.repository?.issueOrPullRequest) {
-    const tags: { [key: string]: string | true } = {}
-    const labels = params.labels.filter(o => labelWhitelist[o.name]).map(o => o.name)
+  const tags: { [key: string]: string | true } = {}
+  const labels = params.labels.filter(o => labelWhitelist[o.name]).map(o => o.name)
 
-    for (const label of labels) {
-      tags[label] = true
-    }
-    tags.is = params.type
-    if ('merged' in params && params.merged) {
-      tags.merged = true
-    }
+  for (const label of labels) {
+    tags[label] = true
+  }
+  tags.is = params.type
+  if ('merged' in params && params.merged) {
+    tags.merged = true
+  }
 
-    metrics.activities_count_metric = {
+  metrics.activities_count_metric = {
+    type: 'count',
+    name: 'activities_count',
+    tags: { ...tags, action: params.action },
+    value: 1
+  }
+
+  if (closedAt) {
+    const durationSeconds = Date.parse(closedAt) - Date.parse(createdAt)
+
+    metrics.duration_seconds_metric = {
       type: 'count',
-      name: 'activities_count',
-      tags: { ...tags, action: params.action },
-      value: 1
-    }
-
-    const { createdAt, closedAt } = timestamps.repository.issueOrPullRequest
-    if (closedAt) {
-      const durationSeconds = Date.parse(closedAt) - Date.parse(createdAt)
-
-      metrics.duration_seconds_metric = {
-        type: 'count',
-        name: 'duration_seconds',
-        tags,
-        value: durationSeconds < 1 ? durationSeconds : Math.round(durationSeconds)
-      }
+      name: 'duration_seconds',
+      tags,
+      value: durationSeconds < 1 ? durationSeconds : Math.round(durationSeconds)
     }
   }
 
