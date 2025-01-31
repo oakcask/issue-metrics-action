@@ -1,11 +1,11 @@
-name: Dependabot
+name: dependabot
 on: pull_request
 permissions:
   pull-requests: write
   contents: write
 jobs:
   auto-merge:
-    name: Auto-merge Dependabot Pull Requests
+    name: auto-merge dependabot pull requests
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
