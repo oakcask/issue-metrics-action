@@ -1,0 +1,46 @@
+name: Check
+on:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN  }}
+      - uses:  ./.github/actions/setup-pnpm
+      - run: pnpm run graphql-codegen
+      - uses: int128/update-generated-files-action@v2
+        with:
+          commit-message: "fix: update graphql types"
+          token: ${{ secrets.GITHUB_TOKEN  }}
+      - run: pnpm run format:all
+      - uses: int128/update-generated-files-action@v2
+        with:
+          commit-message: "style: `$ npm run format:all`"
+          token: ${{ secrets.GITHUB_TOKEN  }}
+      - run: pnpm run test
+  integration:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN  }}
+      - uses:  ./.github/actions/setup-pnpm
+      - run: pnpm build:debug
+      - run: node ./dist
+        env:
+          INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_TEMPLATE: |-
+            {{#each metrics}}{{name}},{{type}},{{value}},{{ddtags tags}}
+            {{/each}}
+          INPUT_OUTPUT-PATH: ${{ runner.temp }}/metrics.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          path: ${{ runner.temp }}/metrics.csv

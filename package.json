@@ -1,0 +1,53 @@
+{
+  "name": "github-action-auto-label-issue",
+  "scripts": {
+    "build": "ncc build -m src/main.ts",
+    "build:debug": "ncc build -s src/main.ts",
+    "test": "vitest --run",
+    "format:all": "eslint --fix .",
+    "release": "semantic-release",
+    "graphql-codegen": "graphql-codegen --config graphql-codegen.yml",
+    "schema:config": "typescript-json-schema ./src/config-types.ts Schema --out ./src/generated/config.schema.json",
+    "schema:rulebook": "typescript-json-schema ./src/rulebook-types.ts Schema --out ./src/generated/rulebook.schema.json"
+  },
+  "author": "oakcask",
+  "license": "MIT",
+  "engines": {
+    "node": "~20"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.0.2",
+    "@eslint/js": "^9.1.1",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/introspection": "^4.0.3",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@octokit/types": "^13.7.0",
+    "@octokit/webhooks-types": "^7.6.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/github": "^11.0.0",
+    "@types/node": "^20.12.7",
+    "@vercel/ncc": "^0.38.1",
+    "eslint": "^9.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.0.0",
+    "eslint-plugin-promise": "^7.0.0",
+    "semantic-release": "^24.0.0",
+    "semantic-release-tags": "^2.0.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.0.0",
+    "typescript-json-schema": "^0.65.1",
+    "vitest": "^3.0.4"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/action": "^7.0.0",
+    "@octokit/graphql": "^8.1.1",
+    "handlebars": "^4.7.8",
+    "tunnel": "^0.0.6"
+  },
+  "packageManager": "pnpm@9.15.4"
+}

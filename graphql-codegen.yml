@@ -1,0 +1,10 @@
+overwrite: true
+schema: https://docs.github.com/public/fpt/schema.docs.graphql
+documents: 
+  - "!src/generated/*"
+  - "src/**/*.ts"
+generates:
+  src/generated/graphql.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"

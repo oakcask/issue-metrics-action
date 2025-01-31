@@ -1,0 +1,15 @@
+{
+    "repository": {
+        "owner": {
+            "login": "owner-in-payload"
+        },
+        "name": "repo-in-payload"
+    },
+    "pull_request": {
+        "node_id": "prid",
+        "number": 4242,
+        "body": "pr body",
+        "state": "closed",
+        "merged": true
+    }
+}

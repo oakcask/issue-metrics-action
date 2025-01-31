@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "prConcurrentLimit": 1,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "automerge": true
+    },
+    {
+      "groupName": "eslint packages",
+      "matchPackageNames": [
+        "/^@?eslint/"
+      ]
+    }
+  ],
+  "rangeStrategy": "update-lockfile"
+}

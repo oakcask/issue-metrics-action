@@ -1,0 +1,28 @@
+name: issue-metrics-action
+description: collect and export issue metrics
+author: oakcask
+inputs:
+  token:
+    required: false
+    description: |-
+      The repository's secret to authorize API invocations.
+      If ommited, GITHUB_TOKEN environment variable is used instead.
+  tag-labels:
+    required: false
+    description: |-
+      Labels names to export as tags of metric.
+  template:
+    required: true
+    description: |-
+      Handlebars template to serialize metrics.
+      Default template will generate in StatsD format (with Datadog extension).
+    default: |-
+      {{#each metrics}}{{name}}:{{value}}|{{statsdType type}}|{{ddtags tags}}
+      {{/each}}
+  output-path:
+    required: false
+    description: |-
+      A file path to output. Leaving empty it will be stdout instead.
+runs:
+  using: node20
+  main: dist/index.js
