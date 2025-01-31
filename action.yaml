@@ -2,11 +2,6 @@ name: issue-metrics-action
 description: collect and export issue metrics
 author: oakcask
 inputs:
-  token:
-    required: false
-    description: |-
-      The repository's secret to authorize API invocations.
-      If ommited, GITHUB_TOKEN environment variable is used instead.
   tag-labels:
     required: false
     description: |-

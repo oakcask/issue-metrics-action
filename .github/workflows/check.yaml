@@ -31,7 +31,6 @@ jobs:
       - run: pnpm build:debug
       - run: node ./dist
         env:
-          INPUT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INPUT_TEMPLATE: |-
             {{#each metrics}}{{name}},{{type}},{{value}},{{ddtags tags}}
             {{/each}}

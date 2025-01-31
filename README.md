@@ -15,7 +15,6 @@ jobs:
     steps:
       - uses: oakcask/issue-metrics-action@v1
         with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
           # This is a example to generate StatsD format with tags.
           # (Note that tags are Datadog extension)
           #
