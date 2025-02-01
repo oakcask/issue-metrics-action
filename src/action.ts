@@ -108,9 +108,9 @@ export function generateMetrics (params: Parameters, labelWhitelist: LabelWhitel
   tags.repo = `${params.owner}/${params.repo}`
 
   const metrics = {
-    // eslint-disable-next-line camelcase
+
     activities_count: generateActionsCount(params, tags),
-    // eslint-disable-next-line camelcase
+
     duration_seconds: generateDurationSeconds(params, tags)
   }
 
