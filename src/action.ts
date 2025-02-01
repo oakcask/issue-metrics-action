@@ -1,15 +1,15 @@
 import fs from 'node:fs/promises'
 import * as core from '@actions/core'
 import { Label, WebhookEvent } from '@octokit/webhooks-types'
-import { Metric } from './metrics.js'
 import Template from './template.js'
+import { Metric, Tags } from './metrics-types.js'
 
 type Parameters = {
   owner: string,
   repo: string,
   action: string,
   number: number,
-  labels: Label[],
+  labels: Pick<Label, 'name'>[],
   createdAt: string,
   closedAt?: string
 } & (
@@ -62,6 +62,68 @@ function parseRepo (payload: WebhookEvent): { owner: string, repo: string } {
   throw new Error('cannot recognize the repository')
 }
 
+type LabelWhitelist = {
+  [key: string]: true
+}
+
+type Metrics = {
+  activities_count: Metric,
+  duration_seconds?: Metric
+}
+
+function generateActionsCount (params: Parameters, tags: Tags): Metric {
+  return {
+    type: 'count',
+    name: 'activities_count',
+    tags: { ...tags, action: params.action },
+    value: 1
+  }
+}
+
+function generateDurationSeconds (params: Parameters, tags: Tags): Metric | undefined {
+  const { createdAt, closedAt } = params
+  if (closedAt) {
+    const durationMillis = Date.parse(closedAt) - Date.parse(createdAt)
+    const durationSeconds = durationMillis / 1000
+    return {
+      type: 'count',
+      name: 'duration_seconds',
+      tags,
+      value: durationSeconds < 1 ? durationSeconds : Math.round(durationSeconds)
+    }
+  }
+}
+
+export function generateMetrics (params: Parameters, labelWhitelist: LabelWhitelist): Metrics {
+  const tags: { [key: string]: string | true } = {}
+  const labels = params.labels.filter(o => labelWhitelist[o.name]).map(o => o.name)
+
+  for (const label of labels) {
+    tags[label] = true
+  }
+  tags.is = params.type
+  if ('merged' in params && params.merged) {
+    tags.merged = true
+  }
+  tags.repo = `${params.owner}/${params.repo}`
+
+  const metrics = {
+
+    activities_count: generateActionsCount(params, tags),
+
+    duration_seconds: generateDurationSeconds(params, tags)
+  }
+
+  // prevent enumerating undefined properties
+  for (const key in metrics) {
+    if (typeof metrics[key] === 'undefined') {
+      delete metrics[key]
+    }
+  }
+
+  return metrics
+}
+
 export async function main () {
   const params = await parseParameters()
   const labelWhitelist = core.getMultilineInput('tag-labels').reduce((a, e) => {
@@ -76,42 +138,8 @@ export async function main () {
     return
   }
 
-  const { createdAt, closedAt } = params
-  const metrics: { [key: string]: Metric } = {}
-
-  const tags: { [key: string]: string | true } = {}
-  const labels = params.labels.filter(o => labelWhitelist[o.name]).map(o => o.name)
-
-  for (const label of labels) {
-    tags[label] = true
-  }
-  tags.is = params.type
-  if ('merged' in params && params.merged) {
-    tags.merged = true
-  }
-
-  metrics.activities_count_metric = {
-    type: 'count',
-    name: 'activities_count',
-    tags: { ...tags, action: params.action },
-    value: 1
-  }
-
-  if (closedAt) {
-    const durationSeconds = Date.parse(closedAt) - Date.parse(createdAt)
-
-    metrics.duration_seconds_metric = {
-      type: 'count',
-      name: 'duration_seconds',
-      tags,
-      value: durationSeconds < 1 ? durationSeconds : Math.round(durationSeconds)
-    }
-  }
-
-  const result = template({
-    ...metrics,
-    metrics: Object.values(metrics)
-  })
+  const metrics = generateMetrics(params, labelWhitelist)
+  const result = template({ metrics })
 
   if (outputPath === '') {
     for (const ln of result.split(/$/)) {
