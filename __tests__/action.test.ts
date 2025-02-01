@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { describe, expect, it, beforeEach } from 'vitest'
 import { generateMetrics, parseParameters } from '../src/action'
 
@@ -61,6 +62,34 @@ describe('parseParameters', () => {
 })
 
 describe('generateMetrics', () => {
+  it('generates issue metrics', () => {
+    const got = generateMetrics({
+      owner: 'foo',
+      repo: 'bar',
+      type: 'issue',
+      action: 'opened',
+      number: 42,
+      labels: [{ name: 'feature' }, { name: 'needs:triage' }],
+      createdAt: '2006-01-02T15:04:06+0700'
+    }, {
+      epic: true,
+      'needs:triage': true
+    })
+
+    const activities_count = {
+      type: 'count',
+      name: 'activities_count',
+      tags: {
+        repo: 'foo/bar',
+        is: 'issue',
+        action: 'opened',
+        'needs:triage': true
+      },
+      value: 1
+    }
+    expect(got).toStrictEqual({ activities_count })
+  })
+
   it('generates PR metrics', () => {
     const got = generateMetrics({
       owner: 'foo',
@@ -77,30 +106,29 @@ describe('generateMetrics', () => {
       bug: true
     })
 
-    expect(got).toStrictEqual({
-      activities_count: {
-        type: 'count',
-        name: 'activities_count',
-        tags: {
-          repo: 'foo/bar',
-          is: 'pr',
-          action: 'closed',
-          merged: true,
-          techdebt: true
-        },
-        value: 1
+    const activities_count = {
+      type: 'count',
+      name: 'activities_count',
+      tags: {
+        repo: 'foo/bar',
+        is: 'pr',
+        action: 'closed',
+        merged: true,
+        techdebt: true
       },
-      duration_seconds: {
-        type: 'count',
-        name: 'duration_seconds',
-        tags: {
-          repo: 'foo/bar',
-          is: 'pr',
-          merged: true,
-          techdebt: true
-        },
-        value: 600
-      }
-    })
+      value: 1
+    }
+    const duration_seconds = {
+      type: 'count',
+      name: 'duration_seconds',
+      tags: {
+        repo: 'foo/bar',
+        is: 'pr',
+        merged: true,
+        techdebt: true
+      },
+      value: 600
+    }
+    expect(got).toStrictEqual({ activities_count, duration_seconds })
   })
 })

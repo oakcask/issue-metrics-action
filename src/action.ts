@@ -107,16 +107,21 @@ export function generateMetrics (params: Parameters, labelWhitelist: LabelWhitel
   }
   tags.repo = `${params.owner}/${params.repo}`
 
-  // eslint-disable-next-line camelcase
-  const activities_count = generateActionsCount(params, tags)
-  // eslint-disable-next-line camelcase
-  const duration_seconds = generateDurationSeconds(params, tags)
-  return {
+  const metrics = {
     // eslint-disable-next-line camelcase
-    activities_count,
+    activities_count: generateActionsCount(params, tags),
     // eslint-disable-next-line camelcase
-    duration_seconds
+    duration_seconds: generateDurationSeconds(params, tags)
   }
+
+  // prevent enumerating undefined properties
+  for (const key in metrics) {
+    if (typeof metrics[key] === 'undefined') {
+      delete metrics[key]
+    }
+  }
+
+  return metrics
 }
 
 export async function main () {
