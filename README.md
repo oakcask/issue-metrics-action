@@ -8,7 +8,24 @@ Generate metric on triggered issues or pull requests event.
 name: example / statsd
 on:
   issues:
+    types:
+      - opened
+      - edited
+      - deleted
+      - transferred
+      - closed
+      - reopened
   pull_request:
+    types:
+      - assigned
+      - unassigned
+      - opened
+      - edited
+      - closed
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
 jobs:
   export:
     runs-on: ubuntu-latest
