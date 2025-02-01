@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest'
-import { parseParameters } from '../src/action'
+import { generateMetrics, parseParameters } from '../src/action'
 
 describe('parseParameters', () => {
   beforeEach(() => {
@@ -56,6 +56,51 @@ describe('parseParameters', () => {
       const params = (await parseParameters())!
       expect(params.createdAt).toEqual('2006-01-02T15:04:06+0700')
       expect(params.closedAt).toEqual('2016-01-02T15:04:06+0700')
+    })
+  })
+})
+
+describe('generateMetrics', () => {
+  it('generates PR metrics', () => {
+    const got = generateMetrics({
+      owner: 'foo',
+      repo: 'bar',
+      type: 'pr',
+      action: 'closed',
+      number: 42,
+      labels: [{ name: 'bugfix' }, { name: 'techdebt' }],
+      createdAt: '2006-01-02T15:04:06+0700',
+      closedAt: '2006-01-02T15:14:06+0700',
+      merged: true
+    }, {
+      techdebt: true,
+      bug: true
+    })
+
+    expect(got).toStrictEqual({
+      activities_count: {
+        type: 'count',
+        name: 'activities_count',
+        tags: {
+          repo: 'foo/bar',
+          is: 'pr',
+          action: 'closed',
+          merged: true,
+          techdebt: true
+        },
+        value: 1
+      },
+      duration_seconds: {
+        type: 'count',
+        name: 'duration_seconds',
+        tags: {
+          repo: 'foo/bar',
+          is: 'pr',
+          merged: true,
+          techdebt: true
+        },
+        value: 600
+      }
     })
   })
 })
