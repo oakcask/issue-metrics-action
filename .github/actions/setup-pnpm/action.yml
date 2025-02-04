@@ -6,6 +6,8 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version-file: ".node-version"
+    - run: npm i -g corepack@latest
+      shell: bash
     - run: corepack enable pnpm
       shell: bash
     - id: pnpm-cache
