@@ -82,6 +82,7 @@ describe('generateMetrics', () => {
       tags: {
         repo: 'foo/bar',
         is: 'issue',
+        number: '42',
         action: 'opened',
         'needs:triage': true
       },
@@ -112,6 +113,7 @@ describe('generateMetrics', () => {
       tags: {
         repo: 'foo/bar',
         is: 'pr',
+        number: '42',
         action: 'closed',
         merged: true,
         techdebt: true
@@ -124,6 +126,7 @@ describe('generateMetrics', () => {
       tags: {
         repo: 'foo/bar',
         is: 'pr',
+        number: '42',
         merged: true,
         techdebt: true
       },
