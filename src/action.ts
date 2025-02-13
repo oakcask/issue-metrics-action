@@ -106,6 +106,7 @@ export function generateMetrics (params: Parameters, labelWhitelist: LabelWhitel
     tags.merged = true
   }
   tags.repo = `${params.owner}/${params.repo}`
+  tags.number = String(params.number);
 
   const metrics = {
 
