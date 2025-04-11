@@ -11,12 +11,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
+      - id: gh-token-gen
+        uses: oakcask/gh-token-gen@v1.0.2
+        with:
+          app-id: ${{ secrets.TOKEN_GEN_APP_ID }}
+          private-key: ${{ secrets.TOKEN_GEN_PRIVATE_KEY }}
       - uses:  ./.github/actions/setup-pnpm
       - run: pnpm run format:all
       - uses: int128/update-generated-files-action@v2
         with:
           commit-message: "style: `$ npm run format:all`"
-          token: ${{ secrets.GITHUB_TOKEN  }}
+          token: ${{ steps.gh-token-gen.outputs.token }}
       - run: pnpm run test
   integration:
     runs-on: ubuntu-latest
