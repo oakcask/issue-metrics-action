@@ -1,32 +1,14 @@
-import { FlatCompat } from '@eslint/eslintrc'
-import js from '@eslint/js'
-import ts from 'typescript-eslint'
-
-const compat = new FlatCompat()
+import neostandard, { plugins } from 'neostandard'
 
 export default [
-  {
+  ...neostandard({
     ignores: [
+      '**/node_modules/**',
       '**/generated/*.ts',
       'dist/**',
       'lib/**'
-    ]
-  },
-  ...ts.config(
-    js.configs.recommended,
-    ...ts.configs.recommended,
-    ...compat.config({
-      extends: [
-        'standard'
-      ]
-    }),
-    {
-      languageOptions: {
-        parserOptions: {
-          ecmaVersion: 'latest',
-          sourceType: 'module'
-        }
-      }
-    }
-  )
+    ],
+    ts: true
+  }),
+  plugins.promise.configs['flat/recommended']
 ]
