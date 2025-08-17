@@ -19,5 +19,5 @@ inputs:
     description: |-
       A file path to output. Leaving empty it will be stdout instead.
 runs:
-  using: node20
+  using: node24
   main: dist/index.js
