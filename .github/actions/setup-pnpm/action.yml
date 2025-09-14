@@ -3,9 +3,10 @@ description: Setup node and pnpm
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v5
       with:
         node-version-file: ".node-version"
+        package-manager-cache: false
     - run: npm i -g corepack@latest
       shell: bash
     - run: corepack enable pnpm
