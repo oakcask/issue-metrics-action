@@ -15,7 +15,7 @@
   "type": "module",
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
-    "@octokit/types": "^14.0.0",
+    "@octokit/types": "^15.0.0",
     "@octokit/webhooks-types": "^7.6.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/github": "^11.0.0",
