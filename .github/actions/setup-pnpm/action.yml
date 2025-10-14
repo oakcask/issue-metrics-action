@@ -3,7 +3,7 @@ description: Setup node and pnpm
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v5
+    - uses: actions/setup-node@v6
       with:
         node-version-file: ".node-version"
         package-manager-cache: false
