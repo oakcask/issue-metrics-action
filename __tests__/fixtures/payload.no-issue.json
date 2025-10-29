@@ -1,8 +1,8 @@
 {
-    "repository": {
-        "owner": {
-            "login": "owner-in-payload"
-        },
-        "name": "repo-in-payload"
-    }
+  "repository": {
+    "owner": {
+      "login": "owner-in-payload"
+    },
+    "name": "repo-in-payload"
+  }
 }
