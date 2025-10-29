@@ -1,17 +1,17 @@
 {
-    "repository": {
-        "owner": {
-            "login": "owner-in-payload"
-        },
-        "name": "repo-in-payload"
+  "repository": {
+    "owner": {
+      "login": "owner-in-payload"
     },
-    "pull_request": {
-        "node_id": "prid",
-        "number": 4242,
-        "body": "pr body",
-        "state": "closed",
-        "merged": true,
-        "created_at": "2006-01-02T15:04:06+0700",
-        "closed_at": "2016-01-02T15:04:06+0700"
-    }
+    "name": "repo-in-payload"
+  },
+  "pull_request": {
+    "node_id": "prid",
+    "number": 4242,
+    "body": "pr body",
+    "state": "closed",
+    "merged": true,
+    "created_at": "2006-01-02T15:04:06+0700",
+    "closed_at": "2016-01-02T15:04:06+0700"
+  }
 }
