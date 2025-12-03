@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
       - id: gh-token-gen
-        uses: oakcask/gh-token-gen@65d90b0fd2b5fd59808511acf45005195f8f8237 # v3.1.6
+        uses: oakcask/gh-token-gen@767b456947d7b627e4f4d1f03d28dfd2f5c391f2 # v3.1.11
         with:
           app-id: ${{ secrets.TOKEN_GEN_APP_ID }}
           private-key: ${{ secrets.TOKEN_GEN_PRIVATE_KEY }}
