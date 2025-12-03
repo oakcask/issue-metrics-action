@@ -21,7 +21,7 @@
     "semantic-release": "^24.0.0",
     "semantic-release-tags": "^2.0.0",
     "typescript": "^5.4.5",
-    "typescript-json-schema": "^0.65.1",
+    "typescript-json-schema": "^0.67.0",
     "vitest": "^3.0.4"
   },
   "dependencies": {
