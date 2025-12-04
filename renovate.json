@@ -1,22 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "helpers:pinGitHubActionDigests"
-  ],
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "prConcurrentLimit": 1,
   "packageRules": [
     {
-      "matchUpdateTypes": [
-        "patch",
-        "minor"
-      ],
+      "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
     },
     {
-      "matchDepTypes":[
-        "action"
-      ],
+      "matchDepTypes": ["action"],
       "matchCurrentAge": "> 5 days",
       "automerge": true
     }
@@ -25,9 +17,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^.github\\/workflows\\/.*\\.ya?ml$/"
-      ],
+      "managerFilePatterns": ["/^.github\\/workflows\\/.*\\.ya?ml$/"],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+?) depName=(?<depName>\\S+?)\\s+\\S+:\\s+?\"(?<currentValue>\\S+)\""
       ]
