@@ -25,7 +25,7 @@ importers:
         specifier: 2.3.11
         version: 2.3.11
       '@octokit/types':
-        specifier: ^15.0.0
+        specifier: ^15.0.2
         version: 15.0.2
       '@octokit/webhooks-types':
         specifier: ^7.6.1
