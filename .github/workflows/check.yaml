@@ -18,7 +18,7 @@ jobs:
           private-key: ${{ secrets.TOKEN_GEN_PRIVATE_KEY }}
       - uses:  ./.github/actions/setup-pnpm
       - run: pnpm run format:all
-      - uses: int128/update-generated-files-action@d9aac571db84cee6c16fa20190621e9deb2bc575 # v2
+      - uses: int128/update-generated-files-action@21a93b7745379d3affb27cb6beb5f68d6cb8fd0d # v2
         with:
           commit-message: "style: `$ npm run format:all`"
           token: ${{ steps.gh-token-gen.outputs.token }}
