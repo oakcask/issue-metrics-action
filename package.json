@@ -22,7 +22,7 @@
     "semantic-release-tags": "^2.0.0",
     "typescript": "^5.9.3",
     "typescript-json-schema": "^0.67.1",
-    "vitest": "^3.0.4"
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
