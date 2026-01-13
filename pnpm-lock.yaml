@@ -52,8 +52,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       typescript-json-schema:
-        specifier: ^0.67.0
-        version: 0.67.0
+        specifier: ^0.67.1
+        version: 0.67.1
       vitest:
         specifier: ^3.0.4
         version: 3.2.4(@types/node@20.19.28)(jiti@2.4.2)(yaml@2.7.0)
@@ -652,6 +652,11 @@ packages:
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.15.0:
+    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -1778,8 +1783,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typescript-json-schema@0.67.0:
-    resolution: {integrity: sha512-YJ+0Yd7deJBx7y8w2cx0WoSfQ4onx/2yqbjzsbo2Ujr99h4ehpFDj+eWG+5mOERUuUuLeyiwgvSNKq9kAtUTOQ==}
+  typescript-json-schema@0.67.1:
+    resolution: {integrity: sha512-vKTZB/RoYTIBdVP7E7vrgHMCssBuhja91wQy498QIVhvfRimaOgjc98uwAXmZ7mbLUytJmOSbF11wPz+ByQeXg==}
     hasBin: true
 
   typescript@5.5.4:
@@ -1922,6 +1927,11 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  vm2@3.10.1:
+    resolution: {integrity: sha512-5VKPEiEzLPiIKxfHoGoafr1yL5PKeALbbwwYhiwyEgWmslnao7e1UxKGL93ekGGt45ETs+zFB0tTYLADzCWH8g==}
+    engines: {node: '>=6.0'}
+    hasBin: true
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -2509,9 +2519,11 @@ snapshots:
 
   acorn-walk@8.3.4:
     dependencies:
-      acorn: 8.14.0
+      acorn: 8.15.0
 
   acorn@8.14.0: {}
+
+  acorn@8.15.0: {}
 
   agent-base@7.1.4: {}
 
@@ -3548,7 +3560,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typescript-json-schema@0.67.0:
+  typescript-json-schema@0.67.1:
     dependencies:
       '@types/json-schema': 7.0.15
       '@types/node': 18.19.130
@@ -3557,6 +3569,7 @@ snapshots:
       safe-stable-stringify: 2.5.0
       ts-node: 10.9.2(@types/node@18.19.130)(typescript@5.5.4)
       typescript: 5.5.4
+      vm2: 3.10.1
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@swc/core'
@@ -3683,6 +3696,11 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vm2@3.10.1:
+    dependencies:
+      acorn: 8.15.0
+      acorn-walk: 8.3.4
 
   which@2.0.2:
     dependencies:
