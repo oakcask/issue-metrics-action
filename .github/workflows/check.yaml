@@ -8,7 +8,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
       - id: gh-token-gen
@@ -29,7 +29,7 @@ jobs:
       issues: read
       pull-requests: read
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           token: ${{ secrets.GITHUB_TOKEN  }}
       - uses:  ./.github/actions/setup-pnpm
