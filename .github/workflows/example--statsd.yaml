@@ -23,7 +23,7 @@ jobs:
   export:
     runs-on: ubuntu-latest
     steps:
-      - uses: oakcask/issue-metrics-action@8a1d9fe362ff6c09de344b5ee84e38f9a901ffc7 # v1
+      - uses: oakcask/issue-metrics-action@f391b127f4fdaa2fb7b63e35b2aa5dbc4d487773 # v1
         with:
           # This is a example to generate StatsD format with tags.
           # (Note that tags are Datadog extension)
