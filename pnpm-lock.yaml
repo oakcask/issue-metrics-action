@@ -52,8 +52,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       typescript-json-schema:
-        specifier: ^0.67.4
-        version: 0.67.4
+        specifier: ^0.68.0
+        version: 0.68.0
       vitest:
         specifier: ^3.2.7
         version: 3.2.7(@types/node@20.19.43)(jiti@2.4.2)(yaml@2.7.0)
@@ -1782,8 +1782,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typescript-json-schema@0.67.4:
-    resolution: {integrity: sha512-BhDCVfwGtPKKt9JOBvh6ocmSbEk7ftx7dpqqIpvGNrjzYcUKm8pnYwKSFfNJwqcp/qNTfZr9sKtVyTxx4V9iRA==}
+  typescript-json-schema@0.68.0:
+    resolution: {integrity: sha512-1X60xXxkZpLAr125Jt5MT9VJTTxT0xfafbjdcbtml26nvpUr2p/P4V34JEXa+ObrHc71W9ksH5pemstY6y+SEw==}
     hasBin: true
 
   typescript@5.9.3:
@@ -1917,11 +1917,6 @@ packages:
         optional: true
       jsdom:
         optional: true
-
-  vm2@3.11.5:
-    resolution: {integrity: sha512-RSrkBiwrj6FRU+QdqNs6KG0XdlvJCjpQ4GXiqmMbrhmwfu5k/XIMpAer0L8f6iuf0uJ3a4T1xJN126Q8yf0VIA==}
-    engines: {node: '>=6.0'}
-    hasBin: true
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -3556,7 +3551,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typescript-json-schema@0.67.4:
+  typescript-json-schema@0.68.0:
     dependencies:
       '@types/json-schema': 7.0.15
       '@types/node': 24.13.3
@@ -3565,7 +3560,6 @@ snapshots:
       safe-stable-stringify: 2.5.0
       ts-node: 10.9.2(@types/node@24.13.3)(typescript@5.9.3)
       typescript: 5.9.3
-      vm2: 3.11.5
       yargs: 18.0.0
     transitivePeerDependencies:
       - '@swc/core'
@@ -3686,11 +3680,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-
-  vm2@3.11.5:
-    dependencies:
-      acorn: 8.15.0
-      acorn-walk: 8.3.4
 
   which@2.0.2:
     dependencies:
