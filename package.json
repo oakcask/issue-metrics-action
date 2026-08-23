@@ -24,7 +24,7 @@
     "semantic-release-tags": "^2.0.0",
     "typescript": "^7.0.2",
     "typescript-json-schema": "^0.68.0",
-    "vitest": "^3.2.7"
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
