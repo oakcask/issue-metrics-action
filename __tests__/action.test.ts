@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import { beforeEach, describe, expect, it } from 'vitest';
-import { generateMetrics, parseParameters } from '../src/action';
+import assert from 'node:assert/strict';
+import { beforeEach, describe, it } from 'node:test';
+import { generateMetrics, parseParameters } from '../lib/action.js';
 
 describe('parseParameters', () => {
   beforeEach(() => {
@@ -10,28 +11,28 @@ describe('parseParameters', () => {
 
   it('takes owner/repo from env', async () => {
     const params = await parseParameters();
-    expect(params?.owner).toEqual('foo');
-    expect(params?.repo).toEqual('bar');
+    assert.equal(params?.owner, 'foo');
+    assert.equal(params?.repo, 'bar');
   });
 
   it('takes owner/repo from payload instead if the env is empty', async () => {
     delete process.env.GITHUB_REPOSITORY;
     const params = await parseParameters();
-    expect(params?.owner).toEqual('owner-in-payload');
-    expect(params?.repo).toEqual('repo-in-payload');
+    assert.equal(params?.owner, 'owner-in-payload');
+    assert.equal(params?.repo, 'repo-in-payload');
   });
 
   it('takes issue number and body from payload', async () => {
     const params = (await parseParameters())!;
-    expect(params.number).toEqual(42);
+    assert.equal(params.number, 42);
   });
 
   it('takes timestamp', async () => {
     const params = (await parseParameters())!;
-    expect(params.createdAt).toEqual('2006-01-02T15:04:06+0700');
+    assert.equal(params.createdAt, '2006-01-02T15:04:06+0700');
   });
 
-  describe('when the payload withoout a issue', async () => {
+  describe('when the payload withoout a issue', () => {
     beforeEach(() => {
       process.env.GITHUB_EVENT_PATH =
         '__tests__/fixtures/payload.no-issue.json';
@@ -39,7 +40,7 @@ describe('parseParameters', () => {
 
     it('is undefined', async () => {
       const params = await parseParameters();
-      expect(params).toBeUndefined();
+      assert.equal(params, undefined);
     });
   });
 
@@ -51,14 +52,14 @@ describe('parseParameters', () => {
 
     it('takes pull request number and body from payload', async () => {
       const params = (await parseParameters())!;
-      expect(params.number).toEqual(4242);
-      expect('merged' in params && params.merged).toEqual(true);
+      assert.equal(params.number, 4242);
+      assert.equal('merged' in params && params.merged, true);
     });
 
     it('takes timestamp', async () => {
       const params = (await parseParameters())!;
-      expect(params.createdAt).toEqual('2006-01-02T15:04:06+0700');
-      expect(params.closedAt).toEqual('2016-01-02T15:04:06+0700');
+      assert.equal(params.createdAt, '2006-01-02T15:04:06+0700');
+      assert.equal(params.closedAt, '2016-01-02T15:04:06+0700');
     });
   });
 });
@@ -93,7 +94,7 @@ describe('generateMetrics', () => {
       },
       value: 1,
     };
-    expect(got).toStrictEqual({ activities_count });
+    assert.deepStrictEqual(got, { activities_count });
   });
 
   it('generates PR metrics', () => {
@@ -140,6 +141,6 @@ describe('generateMetrics', () => {
       },
       value: 600,
     };
-    expect(got).toStrictEqual({ activities_count, duration_seconds });
+    assert.deepStrictEqual(got, { activities_count, duration_seconds });
   });
 });

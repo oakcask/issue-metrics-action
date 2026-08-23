@@ -5,7 +5,8 @@
     "build": "ncc build -m lib/main.js",
     "prebuild:debug": "tsc",
     "build:debug": "ncc build -s lib/main.js",
-    "test": "vitest --run",
+    "pretest": "tsc && tsc --project tsconfig.test.json",
+    "test": "node --test",
     "format:all": "biome check --write",
     "release": "semantic-release"
   },
@@ -23,8 +24,7 @@
     "semantic-release": "^24.2.9",
     "semantic-release-tags": "^2.0.0",
     "typescript": "^7.0.2",
-    "typescript-json-schema": "^0.68.0",
-    "vitest": "^3.2.7"
+    "typescript-json-schema": "^0.68.0"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",

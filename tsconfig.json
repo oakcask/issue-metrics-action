@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
+    "declaration": true,
     "outDir": "./lib",
     "rootDir": "./src",
     "strict": true,
@@ -10,5 +11,6 @@
     "moduleResolution": "nodenext",
     "resolveJsonModule": true
   },
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "__tests__", "__mocks__"]
 }
