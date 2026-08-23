@@ -1,43 +1,46 @@
-import { describe, expect, it } from 'vitest';
-import type { Metric } from '../src/metrics';
-import Template, { ddtags, statsdType } from '../src/template';
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+import Template, { ddtags, statsdType } from '../lib/template.js';
+import type { Metric } from '../src/metrics-types.ts';
 
 describe('statsdType', () => {
   it('returns c if count given', () => {
-    expect(statsdType('count')).toEqual('c');
+    assert.equal(statsdType('count'), 'c');
   });
   it('returns g if gauge given', () => {
-    expect(statsdType('gauge')).toEqual('g');
+    assert.equal(statsdType('gauge'), 'g');
   });
   it('return nothing if otherwise', () => {
-    expect(statsdType('rate')).toEqual('');
+    assert.equal(statsdType('rate'), '');
   });
 });
 
 describe('ddtags', () => {
   it('serializes tags', () => {
-    expect(
+    assert.equal(
       ddtags({
         one: '42',
         two: true,
         three: 42, // value will be removed because not string
       }),
-    ).toEqual('one:42,two,three');
+      'one:42,two,three',
+    );
   });
   it('removes , and |', () => {
-    expect(
+    assert.equal(
       ddtags({
         one: '1,2',
         't|wo': '3,4',
       }),
-    ).toEqual('one:12,two:34');
+      'one:12,two:34',
+    );
   });
   it('preserves already serialized tags', () => {
     const given = {
       one: '42',
       two: true,
     };
-    expect(ddtags(ddtags(given))).toEqual(ddtags(given));
+    assert.equal(ddtags(ddtags(given)), ddtags(given));
   });
 });
 
@@ -50,6 +53,6 @@ describe('example', () => {
       { type: 'count', name: 'c1', value: 42, tags: { t: '3' } },
       { type: 'gauge', name: 'g1', value: 4242, tags: { t: '33' } },
     ];
-    expect(t({ metrics })).toEqual('c1:42|c|t:3\ng1:4242|g|t:33\n');
+    assert.equal(t({ metrics }), 'c1:42|c|t:3\ng1:4242|g|t:33\n');
   });
 });
