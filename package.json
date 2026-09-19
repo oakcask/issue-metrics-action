@@ -14,7 +14,7 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "@biomejs/biome": "2.5.12",
+    "@biomejs/biome": "2.5.14",
     "@octokit/types": "^18.0.0",
     "@octokit/webhooks-types": "^7.6.1",
     "@semantic-release/changelog": "^7.0.0",
