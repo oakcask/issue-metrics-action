@@ -9,7 +9,8 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "__tests__", "__mocks__"]
