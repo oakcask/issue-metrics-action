@@ -15,6 +15,11 @@
       "matchDepTypes": ["action"],
       "matchCurrentAge": "> 5 days",
       "automerge": true
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["renovate"],
+      "schedule": ["* * * * 0"]
     }
   ],
   "rangeStrategy": "bump",
