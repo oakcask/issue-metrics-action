@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@actions/core": "^3.0.1",
-    "@actions/github": "^6.0.1",
+    "@actions/github": "^9.1.1",
     "handlebars": "^4.7.9",
     "tunnel": "^0.0.6"
   },
